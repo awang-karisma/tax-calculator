@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Indonesian Income Tax calculator hero",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: "Indonesian Tax Calculator",
     description:
       "Interactive Indonesian tax calculator with transparent PPh 21 breakdowns.",
-    images: ["/og-image.svg"],
+    images: ["/og-image.png"],
   },
 };
 
