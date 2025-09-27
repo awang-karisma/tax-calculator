@@ -1,0 +1,21 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Indonesian Tax Calculator Open Graph Image</title>
+  <desc id="desc">Hero content describing the Indonesian Income Tax calculator.</desc>
+  <rect width="1200" height="630" fill="#faf6e6" />
+  <rect x="96" y="96" width="1008" height="438" rx="32" fill="#fffef6" stroke="#171614" stroke-width="12" />
+  <rect x="108" y="108" width="984" height="414" rx="26" fill="none" stroke="#171614" stroke-width="6" stroke-dasharray="12 12" opacity="0.08" />
+  <g transform="translate(144 174)">
+    <text x="0" y="0" font-family="'Geist', 'Geist Sans', 'Inter', 'Arial', sans-serif" font-size="28" font-weight="600" letter-spacing="11.2" text-transform="uppercase" fill="#6b655b">
+      Indonesian Income Tax (PPh 21)
+    </text>
+    <text x="0" y="104" font-family="'Geist', 'Geist Sans', 'Inter', 'Arial', sans-serif" font-size="96" font-weight="800" fill="#171614" text-transform="uppercase">
+      Tax Calculator
+    </text>
+    <text x="0" y="192" font-family="'Geist', 'Geist Sans', 'Inter', 'Arial', sans-serif" font-size="28" font-weight="500" fill="#3f3a32" opacity="0.92">
+      Your reliable companion for calculating Indonesian taxes.
+    </text>
+    <text x="0" y="236" font-family="'Geist', 'Geist Sans', 'Inter', 'Arial', sans-serif" font-size="28" font-weight="500" fill="#3f3a32" opacity="0.92">
+      Quick and easy to use — get the numbers you need without the hassle.
+    </text>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { type ChangeEvent, useMemo, useState } from "react";
 import { useTheme } from "./theme-provider";
 
 const TAX_BRACKETS = [
@@ -17,6 +17,13 @@ const PTKP_BASE = 54_000_000;
 const PTKP_MARRIED = 4_500_000;
 const PTKP_DEPENDENT = 4_500_000;
 const PTKP_NON_WORKING_SPOUSE = 54_000_000;
+
+const HERO_COPY = {
+  eyebrow: "Indonesian Income Tax (PPh 21)",
+  title: "Tax Calculator",
+  description:
+    "Plug in your income and household details to estimate annual tax obligations. Calculations follow the latest progressive rates and standard deductions applied in Indonesia.",
+} as const;
 
 type MaritalStatus = "single" | "married";
 type IncomePeriod = "yearly" | "monthly";
@@ -60,6 +67,23 @@ const sanitizeNumber = (value: string) => {
   const numeric = value.replace(/[^0-9.-]/g, "");
   const parsed = Number.parseFloat(numeric);
   return Number.isFinite(parsed) ? parsed : 0;
+};
+
+const formatNumericInput = (value: number) => {
+  if (!Number.isFinite(value)) {
+    return "0";
+  }
+
+  const normalized = Math.max(0, value);
+
+  if (Number.isInteger(normalized)) {
+    return normalized.toString();
+  }
+
+  return normalized
+    .toFixed(2)
+    .replace(/(\.\d*?[1-9])0+$/, "$1")
+    .replace(/\.0+$/, "");
 };
 
 const calculatePtkp = (
@@ -202,6 +226,26 @@ export default function Home() {
     [otherDeductionsInput],
   );
 
+  const handleIncomePeriodChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const newPeriod = event.target.value as IncomePeriod;
+
+    if (newPeriod === incomePeriod) {
+      return;
+    }
+
+    const currentIncome = Math.max(0, sanitizeNumber(grossIncomeInput));
+    let convertedIncome = currentIncome;
+
+    if (incomePeriod === "yearly" && newPeriod === "monthly") {
+      convertedIncome = currentIncome / 12;
+    } else if (incomePeriod === "monthly" && newPeriod === "yearly") {
+      convertedIncome = currentIncome * 12;
+    }
+
+    setGrossIncomeInput(formatNumericInput(convertedIncome));
+    setIncomePeriod(newPeriod);
+  };
+
   const taxBreakdown = useMemo(() => {
     if (grossIncomeAnnual <= 0) {
       return null;
@@ -232,15 +276,13 @@ export default function Home() {
         <header className="flex flex-col gap-6 border-4 border-[var(--border)] bg-[var(--surface)] p-6 shadow-[6px_6px_0_var(--shadow)] sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.4em] text-[var(--muted)]">
-              Indonesian Income Tax (PPh 21)
+              {HERO_COPY.eyebrow}
             </p>
             <h1 className="mt-2 text-3xl font-black uppercase sm:text-4xl">
-              Tax Calculator
+              {HERO_COPY.title}
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--accent-text)]">
-              Plug in your income and household details to estimate annual tax
-              obligations. Calculations follow the latest progressive rates and
-              standard deductions applied in Indonesia.
+              {HERO_COPY.description}
             </p>
           </div>
           <button
@@ -271,9 +313,7 @@ export default function Home() {
                 />
                 <select
                   value={incomePeriod}
-                  onChange={(event) =>
-                    setIncomePeriod(event.target.value as IncomePeriod)
-                  }
+                  onChange={handleIncomePeriodChange}
                   className="input-group__select"
                 >
                   <option value="monthly">Monthly</option>
