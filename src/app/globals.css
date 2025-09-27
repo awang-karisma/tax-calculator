@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap");
+
+@import "tailwindcss";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+}
+
+:root {
+  color-scheme: light;
+  --background: #faf6e6;
+  --surface: #fffef6;
+  --foreground: #171614;
+  --border: #171614;
+  --shadow: #171614;
+  --accent: #ffd447;
+  --accent-text: #3f3a32;
+  --muted: #6b655b;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #10100f;
+  --surface: #1c1c1a;
+  --foreground: #faf6e6;
+  --border: #faf6e6;
+  --shadow: #282828;
+  --accent: #f59f00;
+  --accent-text: #fce9b0;
+  --muted: #b5b0a4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: #10100f;
+    --surface: #1c1c1a;
+    --foreground: #faf6e6;
+    --border: #faf6e6;
+    --shadow: #282828;
+    --accent: #f59f00;
+    --accent-text: #fce9b0;
+    --muted: #b5b0a4;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@layer components {
+  .button-standard {
+    @apply inline-flex items-center justify-center border-4 border-solid font-semibold uppercase;
+    border-color: var(--border);
+    background-color: var(--background);
+    color: var(--foreground);
+    box-shadow: 4px 4px 0 var(--shadow);
+    transition:
+      transform 150ms ease,
+      box-shadow 150ms ease,
+      background-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .button-standard:hover,
+  .button-standard:focus-visible {
+    @apply -translate-y-1;
+  }
+
+  .button-standard:focus-visible {
+    outline: 2px solid var(--border);
+    @apply outline-offset-2;
+  }
+
+  .button-standard[aria-pressed="true"] {
+    background-color: var(--accent);
+    color: var(--border);
+  }
+
+  .input-standard {
+    @apply h-14 w-full border-4 border-solid px-4 text-base outline-none font-mono;
+    background-color: var(--background);
+    color: var(--foreground);
+    box-shadow: 3px 3px 0 var(--shadow);
+    transition:
+      box-shadow 150ms ease,
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .input-standard:focus-visible {
+    @apply outline-none;
+    box-shadow:
+      3px 3px 0 var(--shadow),
+      0 0 0 2px var(--accent);
+  }
+
+  .input-standard::placeholder {
+    color: var(--muted);
+  }
+
+  .select-standard {
+    @apply h-14 w-full border-4 border-solid px-4 text-xs font-semibold uppercase outline-none;
+    background-color: var(--background);
+    color: var(--foreground);
+    letter-spacing: 0.025em;
+    box-shadow: 3px 3px 0 var(--shadow);
+    transition:
+      box-shadow 150ms ease,
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .select-standard:focus-visible {
+    @apply outline-none;
+    box-shadow:
+      3px 3px 0 var(--shadow),
+      0 0 0 2px var(--accent);
+  }
+
+  .input-group {
+    @apply flex items-stretch h-14 border-4 border-solid;
+    background-color: var(--background);
+    color: var(--foreground);
+    box-shadow: 3px 3px 0 var(--shadow);
+    transition:
+      box-shadow 150ms ease,
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .input-group:focus-within {
+    box-shadow:
+      3px 3px 0 var(--shadow),
+      0 0 0 2px var(--accent);
+  }
+
+  .input-group__field {
+    @apply flex-1 bg-transparent px-4 text-base outline-none font-mono;
+    min-width: 0;
+    border: none;
+    border-right: 4px solid var(--border);
+    color: inherit;
+  }
+
+  .input-group__field::placeholder {
+    color: var(--muted);
+  }
+
+  .input-group__field:focus-visible {
+    @apply outline-none;
+  }
+
+  .input-group__select {
+    @apply bg-transparent px-3 text-xs font-semibold uppercase outline-none;
+    border: none;
+    color: inherit;
+    letter-spacing: 0.025em;
+  }
+
+  .input-group__select:focus-visible {
+    @apply outline-none;
+  }
+}
+
+button {
+  @apply cursor-pointer;
+}
+
+input,
+select,
+button,
+textarea {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--border);
+}
+
+:root.theme-transitioning,
+:root.theme-transitioning body,
+:root.theme-transitioning body * {
+  transition-property:
+    background-color, color, border-color, fill, stroke, outline-color;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+}
